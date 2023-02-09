@@ -1,6 +1,7 @@
 import express from "express";
 import BlogPostsModel from "./model.js";
 import createHttpError from "http-errors";
+import { JWTAuthorization } from "../lib/auth/jwtAuth.js";
 // import basicAuthentication from "../lib/auth/basicAuth.js";
 
 const blogPostsRouter = express.Router();

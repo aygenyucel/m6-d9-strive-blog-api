@@ -3,6 +3,7 @@ import createHttpError from "http-errors";
 import AuthorsModel from "./model.js";
 import { createAccessToken } from "../lib/jwt-tools.js";
 import { JWTAuthorization } from "../lib/auth/jwtAuth.js";
+import passport from "passport";
 
 const authorsRouter = express.Router();
 
@@ -24,6 +25,23 @@ authorsRouter.get("/", JWTAuthorization, async (req, res, next) => {
     next(error);
   }
 });
+
+authorsRouter.get(
+  "/auth/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+
+authorsRouter.get(
+  "/auth/google/callback",
+  passport.authenticate("google", { session: false }),
+  (req, res) => {
+    //successful authentication, redirect home.
+    console.log("req.user:", req.user);
+    res.redirect(
+      `${process.env.FE_DEV_URL}?accessToken=${req.user.accessToken}`
+    );
+  }
+);
 
 authorsRouter.get("/:authorId", JWTAuthorization, async (req, res, next) => {
   try {
