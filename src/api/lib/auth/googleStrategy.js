@@ -38,9 +38,8 @@ const googleStrategy = new GoogleStrategy(
         _id: createdAuthor._id,
         role: createdAuthor.role,
       });
+      cb(null, { accessToken }); //it works like (next) we send the informations to callback endpoint which is /auth/google/callback
     }
-
-    cb(null, { accessToken }); //it works like (next) we send the informations to callback endpoint which is /auth/google/callback
   }
 );
 export default googleStrategy;

@@ -95,7 +95,7 @@ authorsRouter.delete("/:authorId", JWTAuthorization, async (req, res, next) => {
   }
 });
 
-authorsRouter.post("/login", JWTAuthorization, async (req, res, next) => {
+authorsRouter.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const author = await AuthorsModel.checkCredentials(email, password);
